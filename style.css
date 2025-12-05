@@ -1,0 +1,379 @@
+/* ===============================
+   RESET + BASE
+=================================*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding-bottom: 80px; /* chừa chỗ cho bottom nav */
+    transition: 0.25s;
+}
+
+/* ===============================
+   LIGHT & DARK MODE
+=================================*/
+body.light {
+    --bg: #f6f6f6;
+    --card: white;
+    --text: #222;
+    --muted: #666;
+    --accent: #4f46e5;
+    --danger: #ef4444;
+    --border: #e5e5e5;
+}
+
+body.dark {
+    --bg: #0d1117;
+    --card: #161b22;
+    --text: #e6edf3;
+    --muted: #8b98a5;
+    --accent: #4f46e5;
+    --danger: #ef4444;
+    --border: #21262d;
+}
+
+/* ===============================
+   APP BAR
+=================================*/
+.appbar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+}
+
+.appbar h1 {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.mode-btn {
+    background: transparent;
+    border: 0;
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.left-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ===============================
+   SUMMARY CARDS
+=================================*/
+#summaryCards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+}
+
+.card {
+    background: var(--card);
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.card b {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* ===============================
+   FORM VÙNG MOBILE
+=================================*/
+#formSection {
+    padding: 16px;
+}
+
+#formSection h2 {
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.input-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: var(--muted);
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 15px;
+}
+
+textarea {
+    resize: none;
+    height: 70px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.btn-danger {
+    width: 100%;
+    padding: 12px;
+    background: var(--danger);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    margin-top: 6px;
+    font-size: 15px;
+}
+
+/* ===============================
+   LIST ITEM DẠNG MOBILE CARD
+=================================*/
+#listSection {
+    padding: 16px;
+}
+
+#listSection h2 {
+    margin-bottom: 14px;
+    font-size: 18px;
+}
+
+.day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.day-card:hover {
+    transform: scale(1.01);
+}
+
+.day-card .date {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.day-card .notes {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.day-card b {
+    font-size: 18px;
+}
+
+/* ===============================
+   CALENDAR GRID
+=================================*/
+#calendarSection {
+    padding: 16px;
+}
+
+#calendarSection h2 {
+    margin-bottom: 12px;
+}
+
+.cal-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.calendar-grid .day {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 10px 4px;
+    text-align: center;
+    border: 1px solid var(--border);
+    font-size: 13px;
+}
+
+.calendar-grid .day.today {
+    border: 2px solid var(--accent);
+}
+
+.calendar-grid .off {
+    background: rgba(239,68,68,0.15);
+    border-color: rgba(239,68,68,0.4);
+}
+
+/* ===============================
+   BOTTOM NAVIGATION
+=================================*/
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 6px 0;
+    z-index: 90;
+}
+
+.nav-item {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.nav-item.active {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.center-add {
+    background: var(--accent);
+    color: white !important;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin: -20px auto 0;
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* ===============================
+   MODAL (trượt lên)
+=================================*/
+.modal {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
+    padding: 18px;
+    transition: bottom 0.3s ease;
+    overflow-y: auto;
+    z-index: 200;
+}
+
+.modal.show {
+    bottom: 0;
+}
+
+.modal h3 {
+    margin-bottom: 10px;
+}
+
+.modal .close-btn {
+    float: right;
+    background: transparent;
+    border: 0;
+    font-size: 22px;
+    color: var(--muted);
+    margin-top: -6px;
+}
+.setting-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+}
+
+.setting-card h3 {
+    margin-bottom: 10px;
+}
+
+.setting-card input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+    background: var(--bg);
+    color: var(--text);
+}
+.btn-off {
+    background: var(--danger);
+    color: white;
+    font-size: 14px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    width: auto;              /* khác nút lưu: không full width */
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 4px;
+    white-space: nowrap;
+}
+.btn-off.active {
+    background: #d63031;
+}
+.off-day {
+    background: #ffe0e0 !important;
+    color: #d63031 !important;
+    font-weight: bold;
+    border-radius: 5px;
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chấm Lương – App Mobile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light">
+
+<!-- Top AppBar -->
+<header class="appbar">
+    <div class="left-area">
+        <span class="material">☰</span>
+        <h1>Chấm Lương</h1>
+    </div>
+    <button id="toggleMode" class="mode-btn">🌙</button>
+</header>
+
+<!-- Main Content -->
+<div id="appContent">
+
+    <!-- Cards tổng hợp -->
+    <section id="summaryCards">
+    <div class="card">
+        <span>Tổng tiền</span>
+        <b id="cardTongTien">0</b>
+    </div>
+    <div class="card">
+        <span>Đơn giao</span>
+        <b id="cardGiao">0</b>
+    </div>
+    <div class="card">
+        <span>Bảo hành</span>
+        <b id="cardBaoHanh">0</b>
+    </div>
+    <div class="card">
+        <span>Thanh lý</span>
+        <b id="cardThanhLy">0</b>
+    </div>
+    <div class="card">
+        <span>Tổng số đơn</span>
+        <b id="cardSoDon">0</b>
+    </div>
+    <div class="card">
+        <span>Tổng KM</span>
+        <b id="cardKM">0</b>
+    </div>
+    <div class="card">
+        <span>Số ngày làm việc</span>
+        <b id="cardNgayLam">0 ngày</b>
+    </div>
+</section>
+
+
+    <!-- Form nhập -->
+    <section id="formSection">
+        <h2>Thêm / Sửa</h2>
+
+        <div class="input-group">
+        <label>Ngày</label>
+
+        <div style="display:flex; align-items:center; gap:10px;">
+            <input type="date" id="date" style="flex:1;">
+            <button type="button" id="toggleOffBtn" class="btn-off">Nghỉ</button>
+        </div>
+    </div>
+
+        <div class="input-group">
+            <label>Loại đơn</label>
+            <select id="donLoai">
+                <option value="giao">Đơn giao</option>
+                <option value="bh">Bảo hành</option>
+                <option value="thanh-ly">Thanh lý</option>
+            </select>
+        </div>
+
+        <div class="grid-2">
+            <div class="input-group">
+                <label>Bộ</label>
+                <input type="number" id="deliver">
+            </div>
+            <div class="input-group">
+                <label>OT</label>
+                <input type="number" id="ot">
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="input-group">
+                <label>KM</label>
+                <input type="number" id="km">
+            </div>
+            <div class="input-group">
+                <label>Số đơn</label>
+                <input type="number" id="soDon">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Ghi chú</label>
+            <textarea id="ghiChu"></textarea>
+        </div>
+
+        <button id="saveBtn" class="btn-primary">Lưu dữ liệu</button>
+        <button id="resetBtn" class="btn-danger">Reset</button>
+        <!-- <button type="button" id="toggleOffBtn" class="btn-off">Đặt nghỉ</button> -->
+    </section>
+
+    <!-- Danh sách theo ngày -->
+    <section id="listSection">
+        <h2>Dữ liệu theo ngày</h2>
+        <div id="dayList"></div>
+    </section>
+
+    <!-- Lịch giống app -->
+    <section id="calendarSection">
+        <h2>Lịch tháng</h2>
+
+        <div class="cal-head">
+            <button id="prevMonth">◀</button>
+            <div id="calendarTitle"></div>
+            <button id="nextMonth">▶</button>
+        </div>
+
+        <div id="calendar" class="calendar-grid"></div>
+    </section>
+    <!-- SETTINGS PAGE -->
+<section id="settingsSection" style="display:none; padding:16px">
+
+    <h2>Cài đặt</h2>
+
+    <!-- Lương – thưởng -->
+    <div class="setting-card">
+        <h3>Cài đặt lương</h3>
+        <label>Lương cơ bản/ngày</label>
+        <input id="setLuongNgay" type="number">
+
+        <label>Thưởng ≥ 10 đơn</label>
+        <input id="setThuong10" type="number">
+
+        <label>Thưởng ≥ 20 đơn</label>
+        <input id="setThuong20" type="number">
+
+        <label>Thưởng ≥ 25 đơn</label>
+        <input id="setThuong25" type="number">
+
+        <label>Tiền OT / giờ</label>
+        <input id="setOT" type="number">
+
+        <label>Tiền bộ giao</label>
+        <input id="setDeliver" type="number">
+
+        <label>Tiền/km</label>
+        <input id="setKM" type="number">
+
+        <button class="btn-primary" onclick="saveSalarySetting()">Lưu cài đặt</button>
+    </div>
+
+    <!-- Xuất / nhập dữ liệu -->
+    <div class="setting-card">
+        <h3>Dữ liệu</h3>
+        <button class="btn-primary" onclick="exportData()">Xuất dữ liệu</button>
+        <input type="file" id="importFile" onchange="importData(event)">
+    </div>
+
+    <!-- Chọn giao diện -->
+    <div class="setting-card">
+        <h3>Giao diện</h3>
+        <button class="btn-primary" onclick="setTheme('light')">Chế độ sáng</button>
+        <button class="btn-primary" onclick="setTheme('dark')">Chế độ tối</button>
+    </div>
+
+    <!-- Mật khẩu ứng dụng -->
+    <div class="setting-card">
+        <h3>Mật khẩu</h3>
+        <label>Mật khẩu mở app</label>
+        <input id="setPass" type="password">
+        <button class="btn-primary" onclick="savePassword()">Lưu mật khẩu</button>
+    </div>
+
+    <!-- Xóa dữ liệu -->
+    <div class="setting-card">
+        <h3>Hành động nguy hiểm</h3>
+        <button class="btn-danger" onclick="clearAllData()">Xóa toàn bộ dữ liệu</button>
+    </div>
+
+</section>
+
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+    <div class="nav-item active" data-page="listSection">🏠<span>Trang chủ</span></div>
+    <div class="nav-item" data-page="calendarSection">📅<span>Lịch</span></div>
+    <div class="nav-item center-add" data-page="formSection">＋</div>
+    <div class="nav-item" data-page="summaryCards">📊<span>Thống kê</span></div>
+    <div class="nav-item" data-page="settingsSection">⚙️<span>Cài đặt</span></div>
+
+</nav>
+<script>
+document.querySelectorAll(".nav-item").forEach(item => {
+    item.addEventListener("click", () => {
+        const page = item.getAttribute("data-page");
+        showPage(page);
+    });
+});
+</script>
+<script src="app.js"></script>
+</body>
+</html>
