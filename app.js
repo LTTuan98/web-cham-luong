@@ -141,7 +141,7 @@ document.getElementById("date").addEventListener("change", updateOffButton);
 /* ===============================
    CALC MONEY
 =================================*/
-function calcMoney(entry) {
+function calcMoney(entry, isFirstEntryOfDay) {
     const setting = JSON.parse(localStorage.getItem(SALARY_KEY) || "{}");
 
     const luongNgay = setting.luongNgay || 250000;
@@ -163,8 +163,11 @@ function calcMoney(entry) {
     else if (soDon >= 20) thuong = thuong20;
     else if (soDon >= 10) thuong = thuong10;
 
-    return luongNgay + deliver * delGia + ot * otGia + km * kmGia + thuong;
+    const luong = isFirstEntryOfDay ? luongNgay : 0;
+
+    return luong + deliver*delGia + ot*otGia + km*kmGia + thuong;
 }
+
 function exportData() {
     // lấy dữ liệu và danh sách ngày nghỉ
     const allData = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
@@ -378,11 +381,11 @@ function renderSummary() {
         if (d.getFullYear() === year && d.getMonth() + 1 === month) {
             const so = Number(r.deliver || 0); // dùng deliver thay vì soDon
 
-            const donLoai = r.donLoai?.trim().toLowerCase().replace(/\s/g,'');
+           
 
-            if (donLoai === "đơngiao") totalGiao += so;
-else if (donLoai === "bảohành") totalBH += so;
-else if (donLoai === "thanhly") totalTL += so;
+            if (r.donLoai === "giao") totalGiao += so;
+            else if (r.donLoai === "bh") totalBH += so;
+            else if (r.donLoai === "thanh-ly") totalTL += so;
 
 
             totalSoDon += so;
@@ -404,8 +407,23 @@ else if (donLoai === "thanhly") totalTL += so;
     document.getElementById("cardSoDon").innerText = totalSoDon;
     document.getElementById("cardKM").innerText = totalKM + " km";
     document.getElementById("cardNgayLam").innerText = `${ngayLam} ngày`;
+    
 }
 
+// lấy danh sách ngày nghỉ trong tháng
+const year = calDate.getFullYear();
+const month = calDate.getMonth();
+
+const offDaysMonth = offDays
+    .filter(s => {
+        const dt = new Date(s);
+        return dt.getFullYear() === year && dt.getMonth() === month;
+    })
+    .map(s => Number(s.split("-")[2]))   // chỉ lấy ngày
+    .sort((a,b)=>a-b);
+
+document.getElementById("cardNghi").innerText =
+    offDaysMonth.length ? offDaysMonth.join(", ") : "–";
 
 
 
